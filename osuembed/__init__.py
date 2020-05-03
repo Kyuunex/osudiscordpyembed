@@ -1,6 +1,7 @@
 import discord
 import pycountry
 
+from discord.utils import escape_markdown
 
 default_embed_color = 0xffffff
 
@@ -17,10 +18,11 @@ async def beatmapset(mapset, color=default_embed_color):
                 pass
         if len(body) > 2048:
             body = ""
+        escaped_body = escape_markdown(body)
         embed = discord.Embed(
-            title=f"{mapset.artist} - {mapset.title}",
+            title=escape_markdown(f"{mapset.artist} - {mapset.title}"),
             url=mapset.url,
-            description=body,
+            description=escaped_body,
             color=int(color)
         )
         embed.set_author(
@@ -57,7 +59,7 @@ async def user(user, color=default_embed_color, custom_footer=""):
         body += f"Joined osu on: {user.join_date}\n"
 
         embed = discord.Embed(
-            title=user.username,
+            title=escape_markdown(user.username),
             url=user.url,
             color=color,
             description=body,
