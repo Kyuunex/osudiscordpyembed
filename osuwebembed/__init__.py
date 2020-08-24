@@ -53,7 +53,7 @@ async def user_array(user, color=None, custom_footer=None):
             except KeyError:
                 pass
 
-        if user["pp"]:
+        if user["statistics"]["pp"]:
             body += f"{user['statistics']['pp']}pp (#{user['statistics']['pp_rank']})\n"
 
         body += f"Joined osu on: {user['join_date']}\n"
