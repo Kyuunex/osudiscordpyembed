@@ -45,6 +45,8 @@ async def user_array(user, color=None, custom_footer=None):
         if not color:
             if user["profile_colour"]:
                 color = int(str(user['profile_colour']).replace("#", "0x"), 16)
+            else:
+                color = default_embed_color
 
         if user["country"]:
             try:
