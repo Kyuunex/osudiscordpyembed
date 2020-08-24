@@ -1,5 +1,5 @@
 import discord
-
+from discord.utils import escape_markdown
 
 default_embed_color = 0xffffff
 
@@ -39,31 +39,40 @@ async def beatmapset_array(mapset, color=default_embed_color):
         return None
 
 
-async def user_array(user, color=default_embed_color, custom_footer=""):
+async def user_array(user, color=None, custom_footer=None):
     if user:
         body = ""
+        if not color:
+            color = int(str(user['profile_colour']).replace("#", ""))
 
         if user["country"]:
             try:
                 country = user["country"]
                 country_flag_emote = f":flag_{country['code'].lower()}:"
                 body += f"{country_flag_emote} {country['name']}\n"
-            except:
+            except KeyError:
                 pass
 
-        if user.pp:
+        if user["pp"]:
             body += f"{user['statistics']['pp']}pp (#{user['statistics']['pp_rank']})\n"
 
         body += f"Joined osu on: {user['join_date']}\n"
+        body += f"Last seen: {user['last_visit']}\n"
+        body += f"Discord: {user['discord']}\n"
+        body += f"Amount of ranked maps: {user['ranked_and_approved_beatmapset_count']}\n"
+        body += f"Kudosu earned: {user['kudosu']['total']}\n"
 
         embed = discord.Embed(
-            title=user["username"],
+            title=escape_markdown(user["username"]),
             url=f"https://osu.ppy.sh/users/{user['id']}",
             color=color,
             description=body,
         )
         embed.set_thumbnail(
             url=user["avatar_url"]
+        )
+        embed.set_image(
+            url=user["cover_url"]
         )
         embed.set_footer(
             text=custom_footer
