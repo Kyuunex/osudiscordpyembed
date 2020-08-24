@@ -1,4 +1,5 @@
 import discord
+import dateutil.parser
 from discord.utils import escape_markdown
 
 default_embed_color = 0xffffff
@@ -59,8 +60,12 @@ async def user_array(user, color=None, custom_footer=None):
         if user["statistics"]["pp"]:
             body += f"{user['statistics']['pp']}pp (#{user['statistics']['pp_rank']})\n"
 
-        body += f"Joined osu on: {user['join_date']}\n"
-        body += f"Last seen: {user['last_visit']}\n"
+        join_date = dateutil.parser.parse(user['join_date'])
+        body += f"Joined osu on: {str(join_date.isoformat(' '))}\n"
+
+        last_visit = dateutil.parser.parse(user['last_visit'])
+        body += f"Last seen: {str(last_visit.isoformat(' '))}\n"
+
         body += f"Discord: {user['discord']}\n"
         body += f"Amount of ranked maps: {user['ranked_and_approved_beatmapset_count']}\n"
         body += f"Kudosu earned: {user['kudosu']['total']}\n"
