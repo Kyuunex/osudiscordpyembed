@@ -3,11 +3,11 @@ from distutils.core import setup
 setup(
     name='osuwebembed',
     packages=['osuwebembed'],
-    version='2.0.0-array',
+    version='2.0.0-placeholder.1',
     description='osuwebembed',
     author='Kyuunex',
     url='https://github.com/Kyuunex/osudiscordpyembed',
-    download_url='https://github.com/Kyuunex/osudiscordpyembed/tarball/2.0.0-array',
+    download_url='https://github.com/Kyuunex/osudiscordpyembed/tarball/2.0.0-placeholder.1',
     keywords=['osu', 'discord'],
     classifiers=[],
     requires=['discord.py'],

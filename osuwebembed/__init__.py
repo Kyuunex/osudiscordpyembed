@@ -4,7 +4,7 @@ import discord
 default_embed_color = 0xffffff
 
 
-async def beatmapset(mapset, color=default_embed_color):
+async def beatmapset_array(mapset, color=default_embed_color):
     if mapset:
         body = f""
 
@@ -39,7 +39,7 @@ async def beatmapset(mapset, color=default_embed_color):
         return None
 
 
-async def user(user, color=default_embed_color, custom_footer=""):
+async def user_array(user, color=default_embed_color, custom_footer=""):
     if user:
         body = ""
 
