@@ -63,8 +63,9 @@ async def user_array(user, color=None, custom_footer=None):
         join_date = dateutil.parser.parse(user['join_date'])
         body += f"Joined osu on: {str(join_date.isoformat(' '))}\n"
 
-        last_visit = dateutil.parser.parse(user['last_visit'])
-        body += f"Last seen: {str(last_visit.isoformat(' '))}\n"
+        if user['last_visit']:
+            last_visit = dateutil.parser.parse(user['last_visit'])
+            body += f"Last seen: {str(last_visit.isoformat(' '))}\n"
 
         body += f"Discord: {user['discord']}\n"
         body += f"Amount of ranked maps: {user['ranked_and_approved_beatmapset_count']}\n"
