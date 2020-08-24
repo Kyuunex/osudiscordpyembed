@@ -43,7 +43,7 @@ async def user_array(user, color=None, custom_footer=None):
     if user:
         body = ""
         if not color:
-            color = int(str(user['profile_colour']).replace("#", ""))
+            color = int(hex(int(str(user['profile_colour']).replace("#", "0x"), 16) + 0x200))
 
         if user["country"]:
             try:
