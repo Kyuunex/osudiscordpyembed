@@ -49,6 +49,9 @@ async def user_array(user, color=None, custom_footer=None):
             else:
                 color = default_embed_color
 
+        if user["title"]:
+            body += f"**{user['title']}**\n"
+
         if user["country"]:
             try:
                 country = user["country"]
@@ -69,12 +72,39 @@ async def user_array(user, color=None, custom_footer=None):
             last_visit = dateutil.parser.parse(user['last_visit'])
             body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
 
-        body += f"**Discord:** {user['discord']}\n"
+        if user['discord']:
+            body += f"**Discord:** {user['discord']}\n"
+
+        if user['twitter']:
+            body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+
+        body += f"**Follower count:** {user['follower_count']}\n"
         body += f"**Amount of ranked maps:** {user['ranked_and_approved_beatmapset_count']}\n"
         body += f"**Kudosu earned:** {user['kudosu']['total']}\n"
 
+        if user['groups']:
+            body += f"**Groups:** "
+            for group in user['groups']:
+                body += f"{group['name']}"
+                if user['groups'][-1] != group:
+                    body += ", "
+            body += f"\n"
+
+        if user['badges']:
+            body += f"\n"
+            body += f"**Badges:** \n"
+            for badge in user['badges']:
+                body += f"~ {badge['description']} ~"
+                # body += f" ({badge['awarded_at']})"
+                body += f"\n"
+            body += f"\n"
+
+        name = escape_markdown(user["username"])
+        if user["is_supporter"]:
+            name += f" :heart:"
+
         embed = discord.Embed(
-            title=escape_markdown(user["username"]),
+            title=name,
             url=f"https://osu.ppy.sh/users/{user['id']}",
             color=color,
             description=body,
