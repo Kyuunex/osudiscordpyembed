@@ -83,9 +83,10 @@ async def user_array(user, color=None, custom_footer=None):
         embed.set_image(
             url=user["cover_url"]
         )
-        embed.set_footer(
-            text=custom_footer
-        )
+        if custom_footer:
+            embed.set_footer(
+                text=custom_footer
+            )
         return embed
     else:
         return None
