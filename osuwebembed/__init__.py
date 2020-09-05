@@ -122,3 +122,75 @@ async def user_array(user, color=None, custom_footer=None):
         return embed
     else:
         return None
+
+
+async def small_user_array(user, color=None, custom_footer=None):
+    if user:
+        body = ""
+        if not color:
+            if user["profile_colour"]:
+                color = int(str(user['profile_colour']).replace("#", "0x"), 16)
+            else:
+                color = default_embed_color
+
+        if user["title"]:
+            body += f"**{user['title']}**\n"
+
+        if user["country"]:
+            try:
+                country = user["country"]
+                country_flag_emote = f":flag_{country['code'].lower()}:"
+                body += f"{country_flag_emote} {country['name']}\n"
+            except KeyError:
+                pass
+
+        if user["statistics"]["pp"]:
+            body += f"{user['statistics']['pp']}pp (#{user['statistics']['pp_rank']})\n"
+
+        body += "\n"
+
+        join_date = dateutil.parser.parse(user['join_date'])
+        body += f"**Joined osu on:** {str(join_date.isoformat(' '))}\n"
+
+        if user['last_visit']:
+            last_visit = dateutil.parser.parse(user['last_visit'])
+            body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
+
+        if user['discord']:
+            body += f"**Discord:** {user['discord']}\n"
+
+        if user['twitter']:
+            body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+
+        body += f"**Follower count:** {user['follower_count']}\n"
+        body += f"**Amount of ranked maps:** {user['ranked_and_approved_beatmapset_count']}\n"
+        body += f"**Kudosu earned:** {user['kudosu']['total']}\n"
+
+        if user['groups']:
+            body += f"**Groups:** "
+            for group in user['groups']:
+                body += f"{group['name']}"
+                if user['groups'][-1] != group:
+                    body += ", "
+            body += f"\n"
+
+        name = escape_markdown(user["username"])
+        if user["is_supporter"]:
+            name += f" :heart:"
+
+        embed = discord.Embed(
+            title=name,
+            url=f"https://osu.ppy.sh/users/{user['id']}",
+            color=color,
+            description=body,
+        )
+        embed.set_thumbnail(
+            url=user["avatar_url"]
+        )
+        if custom_footer:
+            embed.set_footer(
+                text=custom_footer
+            )
+        return embed
+    else:
+        return None
