@@ -109,9 +109,10 @@ async def user_array(user, color=None, custom_footer=None):
             color=color,
             description=body,
         )
-        embed.set_thumbnail(
-            url=user["avatar_url"]
-        )
+        if "http" in user["avatar_url"]:
+            embed.set_thumbnail(
+                url=user["avatar_url"]
+            )
         embed.set_image(
             url=user["cover_url"]
         )
@@ -184,9 +185,11 @@ async def small_user_array(user, color=None, custom_footer=None):
             color=color,
             description=body,
         )
-        embed.set_thumbnail(
-            url=user["avatar_url"]
-        )
+        if "http" in user["avatar_url"]:
+            # thanks peppy
+            embed.set_thumbnail(
+                url=user["avatar_url"]
+            )
         if custom_footer:
             embed.set_footer(
                 text=custom_footer
