@@ -49,8 +49,11 @@ async def user_array(user, color=None, custom_footer=None):
             else:
                 color = default_embed_color
 
-        if user["title"]:
-            body += f"**{user['title']}**\n"
+        try:
+            if user["title"]:
+                body += f"**{user['title']}**\n"
+        except KeyError:
+            pass
 
         if user["country"]:
             try:
@@ -68,15 +71,19 @@ async def user_array(user, color=None, custom_footer=None):
         join_date = dateutil.parser.parse(user['join_date'])
         body += f"**Joined osu on:** {str(join_date.isoformat(' '))}\n"
 
-        if user['last_visit']:
-            last_visit = dateutil.parser.parse(user['last_visit'])
-            body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
+        try:
+            if user['last_visit']:
+                last_visit = dateutil.parser.parse(user['last_visit'])
+                body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
 
-        if user['discord']:
-            body += f"**Discord:** {user['discord']}\n"
+            if user['discord']:
+                body += f"**Discord:** {user['discord']}\n"
 
-        if user['twitter']:
-            body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+            if user['twitter']:
+                body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+        except KeyError:
+            pass
+
 
         body += f"**Follower count:** {user['follower_count']}\n"
         body += f"**Amount of ranked maps:** {user['ranked_and_approved_beatmapset_count']}\n"
@@ -133,9 +140,11 @@ async def small_user_array(user, color=None, custom_footer=None):
                 color = int(str(user['profile_colour']).replace("#", "0x"), 16)
             else:
                 color = default_embed_color
-
-        if user["title"]:
-            body += f"**{user['title']}**\n"
+        try:
+            if user["title"]:
+                body += f"**{user['title']}**\n"
+        except KeyError:
+            pass
 
         if user["country"]:
             try:
@@ -153,15 +162,18 @@ async def small_user_array(user, color=None, custom_footer=None):
         join_date = dateutil.parser.parse(user['join_date'])
         body += f"**Joined osu on:** {str(join_date.isoformat(' '))}\n"
 
-        if user['last_visit']:
-            last_visit = dateutil.parser.parse(user['last_visit'])
-            body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
+        try:
+            if user['last_visit']:
+                last_visit = dateutil.parser.parse(user['last_visit'])
+                body += f"**Last seen:** {str(last_visit.isoformat(' '))}\n"
 
-        if user['discord']:
-            body += f"**Discord:** {user['discord']}\n"
+            if user['discord']:
+                body += f"**Discord:** {user['discord']}\n"
 
-        if user['twitter']:
-            body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+            if user['twitter']:
+                body += f"**Twitter:** [{user['twitter']}](https://twitter.com/{user['twitter']})\n"
+        except KeyError:
+            pass
 
         body += f"**Follower count:** {user['follower_count']}\n"
         body += f"**Amount of ranked maps:** {user['ranked_and_approved_beatmapset_count']}\n"
